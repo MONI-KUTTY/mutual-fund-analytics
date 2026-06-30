@@ -1,0 +1,92 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# ---------------------------------
+# Load Cleaned Dataset
+# ---------------------------------
+
+file_path = r"D:\Mutual_Fund_Analytics\data\processed\08_investor_transactions_clean.csv"
+
+df = pd.read_csv(file_path)
+
+# ---------------------------------
+# Set Plot Style
+# ---------------------------------
+
+sns.set_style("whitegrid")
+
+# ======================================================
+# 1. Age Group Distribution (Pie Chart)
+# ======================================================
+
+plt.figure(figsize=(8,8))
+
+age_counts = df["age_group"].value_counts()
+
+plt.pie(
+    age_counts,
+    labels=age_counts.index,
+    autopct="%1.1f%%",
+    startangle=90
+)
+
+plt.title(
+    "Investor Age Group Distribution",
+    fontsize=16,
+    fontweight="bold"
+)
+
+plt.tight_layout()
+plt.show()
+
+# ======================================================
+# 2. SIP Amount by Age Group (Box Plot)
+# ======================================================
+
+plt.figure(figsize=(10,6))
+
+sip_df = df[df["transaction_type"] == "SIP"]
+
+sns.boxplot(
+    data=sip_df,
+    x="age_group",
+    y="amount_inr"
+)
+
+plt.title(
+    "SIP Amount Distribution by Age Group",
+    fontsize=16,
+    fontweight="bold"
+)
+
+plt.xlabel("Age Group")
+
+plt.ylabel("Investment Amount (₹)")
+
+plt.tight_layout()
+plt.show()
+
+# ======================================================
+# 3. Gender Distribution (Pie Chart)
+# ======================================================
+
+plt.figure(figsize=(8,8))
+
+gender_counts = df["gender"].value_counts()
+
+plt.pie(
+    gender_counts,
+    labels=gender_counts.index,
+    autopct="%1.1f%%",
+    startangle=90
+)
+
+plt.title(
+    "Investor Gender Distribution",
+    fontsize=16,
+    fontweight="bold"
+)
+
+plt.tight_layout()
+plt.show()
